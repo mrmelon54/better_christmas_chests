@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "better_christmas_chests",
+  "version": "${version}",
+  "name": "Better Christmas Chests",
+  "description": "Changes the textures all chests at Christmas",
+  "authors": [
+    "MrMelon54"
+  ],
+  "contact": {
+    "homepage": "https://mrmelon54.com/minecraft/better-christmas-chests",
+    "sources": "https://github.com/MrMelon54/better_christmas_chests",
+    "issues": "https://github.com/MrMelon54/better_christmas_chests/issues"
+  },
+  "license": "GPL-3.0-only",
+  "icon": "icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.mrmelon54.BetterChristmasChests.fabric.BetterChristmasChestsFabric"
+    ]
+  },
+  "mixins": [
+    "better_christmas_chests.mixins.json",
+    "better_christmas_chests-common.mixins.json"
+  ],
+  "depends": {
+    "fabric": "*",
+    "minecraft": ">=1.20",
+    "architectury": ">=9.0.0"
+  }
+}
