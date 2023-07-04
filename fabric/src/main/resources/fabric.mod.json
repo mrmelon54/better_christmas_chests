@@ -18,6 +18,9 @@
   "entrypoints": {
     "main": [
       "com.mrmelon54.BetterChristmasChests.fabric.BetterChristmasChestsFabric"
+    ],
+    "modmenu": [
+      "com.mrmelon54.BetterChristmasChests.fabriclike.ModMenuIntegration"
     ]
   },
   "mixins": [

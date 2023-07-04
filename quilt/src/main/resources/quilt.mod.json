@@ -26,6 +26,9 @@
     "entrypoints": {
       "init": [
         "com.mrmelon54.BetterChristmasChests.quilt.BetterChristmasChestsQuilt"
+      ],
+      "modmenu": [
+        "com.mrmelon54.BetterChristmasChests.fabriclike.ModMenuIntegration"
       ]
     },
     "depends": [
