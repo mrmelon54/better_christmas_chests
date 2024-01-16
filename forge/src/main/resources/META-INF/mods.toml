@@ -1,6 +1,6 @@
 modLoader = "javafml"
-loaderVersion = "[46,)"
-issueTrackerURL = "https://github.com/MrMelon54/better_christmas_chests/issues"
+loaderVersion = "*"
+issueTrackerURL = "https://github.com/mrmelon54/better_christmas_chests/issues"
 license = "GPL-3.0-only"
 
 [[mods]]
@@ -8,26 +8,26 @@ modId = "better_christmas_chests"
 version = "${version}"
 displayName = "Better Christmas Chests"
 authors = "MrMelon54"
-description = "Changes the textures all chests at Christmas"
+description = "${description}"
 logoFile = "/icon.png"
-
-[[dependencies.better_christmas_chests]]
-modId = "forge"
-mandatory = true
-versionRange = "[46,)"
-ordering = "NONE"
-side = "BOTH"
 
 [[dependencies.better_christmas_chests]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.20,)"
+versionRange = "[${minecraft_version},)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.better_christmas_chests]]
 modId = "architectury"
 mandatory = true
-versionRange = "[9.0.0,)"
+versionRange = "[${architectury_version},)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.better_christmas_chests]]
+modId = "cloth_config"
+mandatory = true
+versionRange = "[${cloth_config_version},)"
 ordering = "AFTER"
 side = "BOTH"
