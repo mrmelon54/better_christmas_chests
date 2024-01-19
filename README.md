@@ -12,7 +12,7 @@ Logo made by [@CarbonGhost](https://github.com/CarbonGhost)
 
 Changes the textures used for Enderchests and trapped chests at Christmas as vanilla uses the same texture.
 
-My textures are probably trash but I'm a programmer not an artist.
+My textures are probably trash, but I'm a programmer not an artist.
 
 You can change when Christmas chests appear (from v1.0.1 onward):
 
