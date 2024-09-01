@@ -59,7 +59,7 @@ public abstract class MixinLlamaRenderer extends MobRenderer<Llama, LlamaModel<L
 
     @Inject(method = "getTextureLocation(Lnet/minecraft/world/entity/animal/horse/Llama;)Lnet/minecraft/resources/ResourceLocation;", at = @At("HEAD"), cancellable = true)
     private void getXmasTextureLocation(Llama llama, CallbackInfoReturnable<ResourceLocation> cir) {
-        cir.setReturnValue(BetterChristmasChests.isChristmas() && BetterChristmasChests.config.llamaEnabled
+        cir.setReturnValue(BetterChristmasChests.CONFIG.isChristmas() && BetterChristmasChests.CONFIG.llamaEnabled
                 ? CHRISTMAS_TEXTURES.get(llama.getVariant())
                 : LOCATION_BY_VARIANT.get(llama.getVariant()));
     }

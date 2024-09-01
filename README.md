@@ -1,12 +1,13 @@
 # Better Christmas Chests
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/W7W1607S8)
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/mrmelon54)
 
 Logo made by [@CarbonGhost](https://github.com/CarbonGhost)
 
 ## Setup
 
 - Drop the mod in the mods folder
+- Requires [Infrastructury](https://modrinth.com/mod/infrastructury) and [Architectury API](https://modrinth.com/mod/architectury-api)
 
 ## Details
 

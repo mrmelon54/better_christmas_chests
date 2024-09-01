@@ -20,7 +20,7 @@
       "com.mrmelon54.BetterChristmasChests.fabric.BetterChristmasChestsFabric"
     ],
     "modmenu": [
-      "com.mrmelon54.BetterChristmasChests.fabriclike.ModMenuIntegration"
+      "com.mrmelon54.BetterChristmasChests.ModMenuIntegration"
     ]
   },
   "mixins": [
@@ -29,8 +29,8 @@
   ],
   "depends": {
     "fabric": "*",
-    "minecraft": "${minecraft_version}",
-    "architectury": ">=${architectury_version}",
-    "cloth-config": ">=${cloth_config_version}"
+    "minecraft": $compatible_minecraft_versions,
+    "infrastructury": ">=${infrastructury_version}",
+    "cloth-config${cloth_config_old}": ">=${cloth_config_version}"
   }
 }

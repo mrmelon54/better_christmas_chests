@@ -45,7 +45,7 @@ public abstract class MixinHorseRenderer extends AbstractHorseRenderer<Horse, Ho
 
     @Inject(method = "getTextureLocation(Lnet/minecraft/world/entity/animal/horse/Horse;)Lnet/minecraft/resources/ResourceLocation;", at = @At("HEAD"), cancellable = true)
     private void getXmasTextureLocation(Horse horse, CallbackInfoReturnable<ResourceLocation> cir) {
-        cir.setReturnValue(BetterChristmasChests.isChristmas() && BetterChristmasChests.config.horseEnabled
+        cir.setReturnValue(BetterChristmasChests.CONFIG.isChristmas() && BetterChristmasChests.CONFIG.horseEnabled
                 ? CHRISTMAS_TEXTURES.get(horse.getVariant())
                 : LOCATION_BY_VARIANT.get(horse.getVariant()));
     }

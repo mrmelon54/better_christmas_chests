@@ -86,16 +86,17 @@ public abstract class MixinSheets {
 
     @Inject(method = "chooseMaterial(Lnet/minecraft/world/level/block/entity/BlockEntity;Lnet/minecraft/world/level/block/state/properties/ChestType;Z)Lnet/minecraft/client/resources/model/Material;", at = @At("HEAD"), cancellable = true)
     private static void chooseXmasMaterial(BlockEntity blockEntity, ChestType chestType, boolean bl, CallbackInfoReturnable<Material> cir) {
+        boolean isChristmas = BetterChristmasChests.CONFIG.isChristmas();
         if (blockEntity instanceof EnderChestBlockEntity)
-            cir.setReturnValue(BetterChristmasChests.isChristmas() && BetterChristmasChests.config.enderChestEnabled
+            cir.setReturnValue(isChristmas && BetterChristmasChests.CONFIG.enderChestEnabled
                     ? ENDER_XMAS_LOCATION
                     : ENDER_CHEST_LOCATION);
         else if (blockEntity instanceof TrappedChestBlockEntity)
-            cir.setReturnValue(BetterChristmasChests.isChristmas() && BetterChristmasChests.config.trappedChestEnabled
+            cir.setReturnValue(isChristmas && BetterChristmasChests.CONFIG.trappedChestEnabled
                     ? chooseMaterial(chestType, CHEST_TRAP_XMAS_LOCATION, CHEST_TRAP_XMAS_LOCATION_RIGHT, CHEST_TRAP_XMAS_LOCATION_RIGHT)
                     : chooseMaterial(chestType, CHEST_TRAP_LOCATION, CHEST_TRAP_LOCATION_LEFT, CHEST_TRAP_LOCATION_RIGHT));
         else if (blockEntity instanceof ChestBlockEntity)
-            cir.setReturnValue(BetterChristmasChests.isChristmas() && BetterChristmasChests.config.chestEnabled
+            cir.setReturnValue(isChristmas && BetterChristmasChests.CONFIG.chestEnabled
                     ? chooseMaterial(chestType, CHEST_XMAS_LOCATION, CHEST_XMAS_LOCATION_LEFT, CHEST_XMAS_LOCATION_RIGHT)
                     : chooseMaterial(chestType, CHEST_LOCATION, CHEST_LOCATION_LEFT, CHEST_LOCATION_RIGHT));
     }

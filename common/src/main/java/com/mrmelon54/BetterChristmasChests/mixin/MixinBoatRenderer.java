@@ -16,7 +16,7 @@ public class MixinBoatRenderer {
     private RenderType injectedRender(ListModel<Boat> instance, ResourceLocation resourceLocation) {
         String p = resourceLocation.getPath();
         int i = p.lastIndexOf('/');
-        ResourceLocation loc = p.contains("chest_boat/") && BetterChristmasChests.isChristmas() && BetterChristmasChests.config.chestBoatEnabled
+        ResourceLocation loc = p.contains("chest_boat/") && BetterChristmasChests.CONFIG.isChristmas() && BetterChristmasChests.CONFIG.chestBoatEnabled
                 ? new ResourceLocation("better_christmas_chests", "textures/entity/chest_boat/christmas_" + p.substring(i + 1))
                 : resourceLocation;
         return instance.renderType(loc);

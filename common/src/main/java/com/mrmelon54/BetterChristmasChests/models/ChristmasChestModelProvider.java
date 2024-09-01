@@ -15,10 +15,11 @@ public class ChristmasChestModelProvider implements ClampedItemPropertyFunction 
     @Override
     public float unclampedCall(ItemStack itemStack, @Nullable ClientLevel clientLevel, @Nullable LivingEntity livingEntity, int i) {
         if (itemStack == null) return 0;
-        if (!BetterChristmasChests.isChristmas()) return 0;
-        if (itemStack.getItem() == Items.CHEST_MINECART && BetterChristmasChests.isChristmas() && BetterChristmasChests.config.minecartWithChestEnabled)
+        boolean isChristmas = BetterChristmasChests.CONFIG.isChristmas();
+        if (!isChristmas) return 0;
+        if (itemStack.getItem() == Items.CHEST_MINECART && BetterChristmasChests.CONFIG.minecartWithChestEnabled)
             return 1;
-        if (Arrays.stream(ChestBoatArray.ChestBoats).anyMatch(item -> itemStack.getItem() == item) && BetterChristmasChests.config.chestBoatEnabled)
+        if (Arrays.stream(ChestBoatArray.ChestBoats).anyMatch(item -> itemStack.getItem() == item) && BetterChristmasChests.CONFIG.chestBoatEnabled)
             return 1;
         return 0;
     }

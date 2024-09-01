@@ -40,7 +40,7 @@ public abstract class MixinChestedHorseRenderer<T extends AbstractChestedHorse> 
 
     @Inject(method = "getTextureLocation(Lnet/minecraft/world/entity/animal/horse/AbstractChestedHorse;)Lnet/minecraft/resources/ResourceLocation;", at = @At("HEAD"), cancellable = true)
     private void getXmasTextureLocation(T abstractChestedHorse, CallbackInfoReturnable<ResourceLocation> cir) {
-        cir.setReturnValue(BetterChristmasChests.isChristmas() && BetterChristmasChests.config.donkeyEnabled
+        cir.setReturnValue(BetterChristmasChests.CONFIG.isChristmas() && BetterChristmasChests.CONFIG.donkeyEnabled
                 ? CHRISTMAS_TEXTURES.get(abstractChestedHorse.getType())
                 : MAP.get(abstractChestedHorse.getType()));
     }

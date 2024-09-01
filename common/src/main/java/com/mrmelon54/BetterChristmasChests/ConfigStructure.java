@@ -1,9 +1,11 @@
-package com.mrmelon54.BetterChristmasChests.config;
+package com.mrmelon54.BetterChristmasChests;
 
 import com.mrmelon54.BetterChristmasChests.enums.ChristmasChestsEnabled;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
+
+import java.util.Calendar;
 
 @Config(name = "better_christmas_chests")
 @Config.Gui.Background("better_christmas_chests:textures/gui/candy_cane.png")
@@ -31,4 +33,18 @@ public class ConfigStructure implements ConfigData {
 
     // Enable chest boat type separately
     public boolean chestBoatEnabled = true;
+
+    public boolean isChristmasDates() {
+        Calendar calendar = Calendar.getInstance();
+        int date = calendar.get(Calendar.DATE);
+        return calendar.get(Calendar.MONTH) == Calendar.DECEMBER && date >= 24 && date <= 26;
+    }
+
+    public boolean isChristmas() {
+        return switch (modeEnabled) {
+            case ALWAYS -> true;
+            case AT_CHRISTMAS -> isChristmasDates();
+            case NEVER -> false;
+        };
+    }
 }

@@ -28,7 +28,7 @@
         "com.mrmelon54.BetterChristmasChests.quilt.BetterChristmasChestsQuilt"
       ],
       "modmenu": [
-        "com.mrmelon54.BetterChristmasChests.fabriclike.ModMenuIntegration"
+        "com.mrmelon54.BetterChristmasChests.ModMenuIntegration"
       ]
     },
     "depends": [
@@ -42,11 +42,11 @@
       },
       {
         "id": "minecraft",
-        "version": "${minecraft_version}"
+        "version": $compatible_minecraft_versions
       },
       {
-        "id": "architectury",
-        "version": ">=${architectury_version}"
+        "id": "infrastructury",
+        "version": ">=${infrastructury_version}"
       },
       {
         "id": "cloth-config",

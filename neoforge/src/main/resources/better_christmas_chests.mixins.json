@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "com.mrmelon54.BetterChristmasChests.mixin.forge",
+  "package": "com.mrmelon54.BetterChristmasChests.mixin.neoforge",
   "minVersion": "0.8",
   "client": [
   ],
