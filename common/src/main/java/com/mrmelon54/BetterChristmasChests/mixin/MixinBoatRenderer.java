@@ -1,5 +1,6 @@
 package com.mrmelon54.BetterChristmasChests.mixin;
 
+#if MC_VER < MC_1_21_11
 import com.mrmelon54.BetterChristmasChests.BetterChristmasChests;
 import net.minecraft.client.model.ListModel;
 import net.minecraft.client.renderer.RenderType;
@@ -22,3 +23,23 @@ public class MixinBoatRenderer {
         return instance.renderType(loc);
     }
 }
+#else
+
+import com.mrmelon54.BetterChristmasChests.BetterChristmasChests;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.renderer.entity.BoatRenderer;
+import net.minecraft.client.renderer.entity.state.BoatRenderState;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.resources.Identifier;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Redirect;
+
+@Mixin(BoatRenderer.class)
+public class MixinBoatRenderer {
+    @Redirect(method = "renderType", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/EntityModel;renderType(Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/rendertype/RenderType;"))
+    private RenderType redirectRenderType(EntityModel<BoatRenderState> entityModel, Identifier identifier) {
+        return entityModel.renderType((BetterChristmasChests.CONFIG.isChristmas() && BetterChristmasChests.CONFIG.chestBoatEnabled) ? BetterChristmasChests.getChristmasTexture(identifier) : identifier);
+    }
+}
+#endif

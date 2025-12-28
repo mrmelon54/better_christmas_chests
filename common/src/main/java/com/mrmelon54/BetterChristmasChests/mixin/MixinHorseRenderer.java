@@ -1,5 +1,6 @@
 package com.mrmelon54.BetterChristmasChests.mixin;
 
+#if MC_VER < MC_1_21_11
 import com.google.common.collect.Maps;
 import com.mrmelon54.BetterChristmasChests.BetterChristmasChests;
 import net.minecraft.Util;
@@ -50,3 +51,32 @@ public abstract class MixinHorseRenderer extends AbstractHorseRenderer<Horse, Ho
                 : LOCATION_BY_VARIANT.get(horse.getVariant()));
     }
 }
+#else
+
+import com.mrmelon54.BetterChristmasChests.BetterChristmasChests;
+import net.minecraft.client.model.animal.equine.HorseModel;
+import net.minecraft.client.renderer.entity.AbstractHorseRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.HorseRenderer;
+import net.minecraft.client.renderer.entity.state.HorseRenderState;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.animal.equine.Horse;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+@Mixin(HorseRenderer.class)
+public abstract class MixinHorseRenderer extends AbstractHorseRenderer<Horse, HorseRenderState, HorseModel> {
+    public MixinHorseRenderer(EntityRendererProvider.Context context, HorseModel adultModel, HorseModel babyModel) {
+        super(context, adultModel, babyModel);
+    }
+
+    @Inject(method = "getTextureLocation(Lnet/minecraft/client/renderer/entity/state/HorseRenderState;)Lnet/minecraft/resources/Identifier;", at = @At(value = "RETURN"), cancellable = true)
+    private void getXmasTextureLocation(HorseRenderState horseRenderState, CallbackInfoReturnable<Identifier> cir) {
+        if (BetterChristmasChests.CONFIG.isChristmas() && BetterChristmasChests.CONFIG.horseEnabled) {
+            cir.setReturnValue(BetterChristmasChests.getChristmasTexture(cir.getReturnValue()));
+        }
+    }
+}
+#endif

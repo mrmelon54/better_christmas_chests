@@ -1,5 +1,6 @@
 package com.mrmelon54.BetterChristmasChests.mixin;
 
+#if MC_VER < MC_1_21_11
 import com.google.common.collect.Maps;
 import com.mrmelon54.BetterChristmasChests.BetterChristmasChests;
 import net.minecraft.Util;
@@ -64,3 +65,35 @@ public abstract class MixinLlamaRenderer extends MobRenderer<Llama, LlamaModel<L
                 : LOCATION_BY_VARIANT.get(llama.getVariant()));
     }
 }
+#else
+
+import com.mrmelon54.BetterChristmasChests.BetterChristmasChests;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.model.animal.llama.LlamaModel;
+import net.minecraft.client.renderer.entity.AgeableMobRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.LlamaRenderer;
+import net.minecraft.client.renderer.entity.state.LlamaRenderState;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.animal.equine.Llama;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+@Mixin(LlamaRenderer.class)
+@Environment(EnvType.CLIENT)
+public abstract class MixinLlamaRenderer extends AgeableMobRenderer<Llama, LlamaRenderState, LlamaModel> {
+    public MixinLlamaRenderer(EntityRendererProvider.Context context, LlamaModel adultModel, LlamaModel babyModel, float scale) {
+        super(context, adultModel, babyModel, scale);
+    }
+
+    @Inject(method = "getTextureLocation(Lnet/minecraft/client/renderer/entity/state/LlamaRenderState;)Lnet/minecraft/resources/Identifier;", at = @At("HEAD"), cancellable = true)
+    private void getXmasTextureLocation(LlamaRenderState llamaRenderState, CallbackInfoReturnable<Identifier> cir) {
+        if (BetterChristmasChests.CONFIG.isChristmas() && BetterChristmasChests.CONFIG.zombieHorseEnabled) {
+            cir.setReturnValue(BetterChristmasChests.getChristmasTexture(cir.getReturnValue()));
+        }
+    }
+}
+#endif

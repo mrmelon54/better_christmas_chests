@@ -1,5 +1,6 @@
 package com.mrmelon54.BetterChristmasChests.mixin;
 
+#if MC_VER < MC_1_21_11
 import com.mrmelon54.BetterChristmasChests.BetterChristmasChests;
 import net.minecraft.Util;
 import net.minecraft.client.model.HorseModel;
@@ -42,3 +43,35 @@ public abstract class MixinUndeadHorseRenderer extends AbstractHorseRenderer<Abs
                 : MAP.get(abstractHorse.getType()));
     }
 }
+#else
+
+import com.mrmelon54.BetterChristmasChests.BetterChristmasChests;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.model.animal.equine.AbstractEquineModel;
+import net.minecraft.client.renderer.entity.AbstractHorseRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.UndeadHorseRenderer;
+import net.minecraft.client.renderer.entity.state.EquineRenderState;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.animal.equine.AbstractHorse;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+@Mixin(UndeadHorseRenderer.class)
+@Environment(EnvType.CLIENT)
+public abstract class MixinUndeadHorseRenderer extends AbstractHorseRenderer<AbstractHorse, EquineRenderState, AbstractEquineModel<EquineRenderState>> {
+    public MixinUndeadHorseRenderer(EntityRendererProvider.Context context, AbstractEquineModel<EquineRenderState> adultModel, AbstractEquineModel<EquineRenderState> babyModel) {
+        super(context, adultModel, babyModel);
+    }
+
+    @Inject(method = "getTextureLocation(Lnet/minecraft/client/renderer/entity/state/EquineRenderState;)Lnet/minecraft/resources/Identifier;", at = @At(value = "RETURN"), cancellable = true)
+    private void getXmasTextureLocation(EquineRenderState equineRenderState, CallbackInfoReturnable<Identifier> cir) {
+        if (BetterChristmasChests.CONFIG.isChristmas() && BetterChristmasChests.CONFIG.zombieHorseEnabled) {
+            cir.setReturnValue(BetterChristmasChests.getChristmasTexture(cir.getReturnValue()));
+        }
+    }
+}
+#endif

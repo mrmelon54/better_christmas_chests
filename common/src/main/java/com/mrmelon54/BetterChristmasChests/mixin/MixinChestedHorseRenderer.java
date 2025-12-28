@@ -1,5 +1,6 @@
 package com.mrmelon54.BetterChristmasChests.mixin;
 
+#if MC_VER < MC_1_21_11
 import com.mrmelon54.BetterChristmasChests.BetterChristmasChests;
 import net.minecraft.Util;
 import net.minecraft.client.model.ChestedHorseModel;
@@ -45,3 +46,35 @@ public abstract class MixinChestedHorseRenderer<T extends AbstractChestedHorse> 
                 : MAP.get(abstractChestedHorse.getType()));
     }
 }
+#else
+
+import com.mrmelon54.BetterChristmasChests.BetterChristmasChests;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.client.model.animal.equine.DonkeyModel;
+import net.minecraft.client.renderer.entity.AbstractHorseRenderer;
+import net.minecraft.client.renderer.entity.DonkeyRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.state.DonkeyRenderState;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.animal.equine.AbstractChestedHorse;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+@Mixin(DonkeyRenderer.class)
+@Environment(EnvType.CLIENT)
+public abstract class MixinChestedHorseRenderer<T extends AbstractChestedHorse> extends AbstractHorseRenderer<T, DonkeyRenderState, DonkeyModel> {
+    public MixinChestedHorseRenderer(EntityRendererProvider.Context context, DonkeyModel adultModel, DonkeyModel babyModel) {
+        super(context, adultModel, babyModel);
+    }
+
+    @Inject(method = "getTextureLocation(Lnet/minecraft/client/renderer/entity/state/DonkeyRenderState;)Lnet/minecraft/resources/Identifier;", at = @At(value = "RETURN"), cancellable = true)
+    private void getXmasTextureLocation(DonkeyRenderState donkeyRenderState, CallbackInfoReturnable<Identifier> cir) {
+        if (BetterChristmasChests.CONFIG.isChristmas() && BetterChristmasChests.CONFIG.donkeyEnabled) {
+            cir.setReturnValue(BetterChristmasChests.getChristmasTexture(cir.getReturnValue()));
+        }
+    }
+}
+#endif
