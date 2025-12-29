@@ -81,14 +81,10 @@ subprojects { p ->
             shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
             compileClasspath.extendsFrom common
             runtimeClasspath.extendsFrom common
-            if (findProject(":forge"))
-                developmentForge.extendsFrom common
             if (findProject(":neoforge"))
                 developmentNeoForge.extendsFrom common
             compileClasspath.extendsFrom coreProjects
             runtimeClasspath.extendsFrom coreProjects
-            if (findProject(":forge"))
-                developmentForge.extendsFrom coreProjects
             if (findProject(":neoforge"))
                 developmentNeoForge.extendsFrom coreProjects
         }
@@ -176,11 +172,6 @@ forgix {
     if (findProject(":quilt"))
         quilt {
             jarLocation = "build/libs/${project.archives_base_name}-quilt-${rootProject.versionStr}.jar"
-        }
-
-    if (findProject(":forge"))
-        forge {
-            jarLocation = "build/libs/${project.archives_base_name}-forge-${rootProject.versionStr}.jar"
         }
 
     if (findProject(":neoforge"))
