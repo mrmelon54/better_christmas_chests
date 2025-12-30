@@ -89,9 +89,9 @@ public abstract class MixinLlamaRenderer extends AgeableMobRenderer<Llama, Llama
         super(context, adultModel, babyModel, scale);
     }
 
-    @Inject(method = "getTextureLocation(Lnet/minecraft/client/renderer/entity/state/LlamaRenderState;)Lnet/minecraft/resources/Identifier;", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "getTextureLocation(Lnet/minecraft/client/renderer/entity/state/LlamaRenderState;)Lnet/minecraft/resources/Identifier;", at = @At("RETURN"), cancellable = true)
     private void getXmasTextureLocation(LlamaRenderState llamaRenderState, CallbackInfoReturnable<Identifier> cir) {
-        if (BetterChristmasChests.CONFIG.isChristmas() && BetterChristmasChests.CONFIG.zombieHorseEnabled) {
+        if (BetterChristmasChests.CONFIG.isChristmas() && BetterChristmasChests.CONFIG.llamaEnabled) {
             cir.setReturnValue(BetterChristmasChests.getChristmasTexture(cir.getReturnValue()));
         }
     }
