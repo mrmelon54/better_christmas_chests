@@ -20,10 +20,10 @@ import net.minecraft.world.level.block.entity.EnderChestBlockEntity;
 import net.minecraft.world.level.block.entity.TrappedChestBlockEntity;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.function.Consumer;
-#else
-import net.minecraft.client.renderer.MaterialMapper;
+#else import net.minecraft.client.renderer.MaterialMapper;
 import org.jetbrains.annotations.NotNull;
 import net.minecraft.client.renderer.blockentity.state.ChestRenderState;
+import net.minecraft.resources.Identifier;
 #endif
 
 @Mixin(Sheets.class)
@@ -81,10 +81,13 @@ public abstract class MixinSheets {
     @Shadow
     @Final
     public static Material CHEST_LOCATION_LEFT;
-    #endif
     @Shadow
     @Final
     public static Material CHEST_LOCATION_RIGHT;
+    #endif
+    @Shadow
+    @Final
+    public static Material CHEST_XMAS_LOCATION_RIGHT;
     @Unique
     private static final Material ENDER_XMAS_LOCATION = better_christmas_chests$chestXmasMaterial("ender");
     @Unique
@@ -126,7 +129,7 @@ public abstract class MixinSheets {
         #if MC_VER < MC_1_21_11
         return new Material(CHEST_SHEET, new ResourceLocation("better_christmas_chests:entity/chest/christmas_" + variant));
         #else
-        return CHEST_MAPPER.defaultNamespaceApply(variant);
+        return CHEST_MAPPER.apply(Identifier.fromNamespaceAndPath(BetterChristmasChests.MOD_ID, "christmas_" + variant));
         #endif
     }
 
@@ -159,15 +162,24 @@ public abstract class MixinSheets {
     @Inject(method = "chooseMaterial(Lnet/minecraft/client/renderer/blockentity/state/ChestRenderState$ChestMaterialType;Lnet/minecraft/world/level/block/state/properties/ChestType;)Lnet/minecraft/client/resources/model/Material;", at = @At("HEAD"), cancellable = true)
     private static void chooseXmasMaterial(ChestRenderState.ChestMaterialType chestMaterialType, ChestType chestType, CallbackInfoReturnable<Material> cir) {
         if (BetterChristmasChests.CONFIG.isChristmas()) {
-            cir.setReturnValue(switch (chestMaterialType) {
-                case ENDER_CHEST -> ENDER_XMAS_LOCATION;
-                case CHRISTMAS, REGULAR -> chooseMaterial(chestType, CHEST_XMAS_LOCATION, CHEST_XMAS_LOCATION_LEFT, CHEST_LOCATION_RIGHT);
-                case TRAPPED -> chooseMaterial(chestType, CHEST_TRAP_XMAS_LOCATION, CHEST_TRAP_XMAS_LOCATION_LEFT, CHEST_TRAP_XMAS_LOCATION_RIGHT);
-                case COPPER_UNAFFECTED -> chooseMaterial(chestType, COPPER_CHEST_XMAS_LOCATION, COPPER_CHEST_XMAS_LOCATION_LEFT, COPPER_CHEST_XMAS_LOCATION_RIGHT);
-                case COPPER_EXPOSED -> chooseMaterial(chestType, EXPOSED_COPPER_CHEST_XMAS_LOCATION, EXPOSED_COPPER_CHEST_XMAS_LOCATION_LEFT, EXPOSED_COPPER_CHEST_XMAS_LOCATION_RIGHT);
-                case COPPER_WEATHERED -> chooseMaterial(chestType, WEATHERED_COPPER_CHEST_XMAS_LOCATION, WEATHERED_COPPER_CHEST_XMAS_LOCATION_LEFT, WEATHERED_COPPER_CHEST_XMAS_LOCATION_RIGHT);
-                case COPPER_OXIDIZED -> chooseMaterial(chestType, OXIDIZED_COPPER_CHEST_XMAS_LOCATION, OXIDIZED_COPPER_CHEST_XMAS_LOCATION_LEFT, OXIDIZED_COPPER_CHEST_XMAS_LOCATION_RIGHT);
-            });
+            switch (chestMaterialType) {
+                case ENDER_CHEST -> {
+                    if (BetterChristmasChests.CONFIG.enderChestEnabled) cir.setReturnValue(ENDER_XMAS_LOCATION);
+                }
+                case CHRISTMAS, REGULAR -> chooseXmasMaterial(cir, BetterChristmasChests.CONFIG.chestEnabled, chestType, CHEST_XMAS_LOCATION, CHEST_XMAS_LOCATION_LEFT, CHEST_XMAS_LOCATION_RIGHT);
+                case TRAPPED -> chooseXmasMaterial(cir, BetterChristmasChests.CONFIG.trappedChestEnabled, chestType, CHEST_TRAP_XMAS_LOCATION, CHEST_TRAP_XMAS_LOCATION_LEFT, CHEST_TRAP_XMAS_LOCATION_RIGHT);
+                case COPPER_UNAFFECTED -> chooseXmasMaterial(cir, BetterChristmasChests.CONFIG.copperChestEnabled, chestType, COPPER_CHEST_XMAS_LOCATION, COPPER_CHEST_XMAS_LOCATION_LEFT, COPPER_CHEST_XMAS_LOCATION_RIGHT);
+                case COPPER_EXPOSED -> chooseXmasMaterial(cir, BetterChristmasChests.CONFIG.copperChestEnabled, chestType, EXPOSED_COPPER_CHEST_XMAS_LOCATION, EXPOSED_COPPER_CHEST_XMAS_LOCATION_LEFT, EXPOSED_COPPER_CHEST_XMAS_LOCATION_RIGHT);
+                case COPPER_WEATHERED -> chooseXmasMaterial(cir, BetterChristmasChests.CONFIG.copperChestEnabled, chestType, WEATHERED_COPPER_CHEST_XMAS_LOCATION, WEATHERED_COPPER_CHEST_XMAS_LOCATION_LEFT, WEATHERED_COPPER_CHEST_XMAS_LOCATION_RIGHT);
+                case COPPER_OXIDIZED -> chooseXmasMaterial(cir, BetterChristmasChests.CONFIG.copperChestEnabled, chestType, OXIDIZED_COPPER_CHEST_XMAS_LOCATION, OXIDIZED_COPPER_CHEST_XMAS_LOCATION_LEFT, OXIDIZED_COPPER_CHEST_XMAS_LOCATION_RIGHT);
+            }
+        }
+    }
+
+    @Unique
+    private static void chooseXmasMaterial(CallbackInfoReturnable<Material> cir, boolean chestEnabled, ChestType chestType, Material doubleMaterial, Material leftMaterial, Material rightMaterial) {
+        if (chestEnabled) {
+            cir.setReturnValue(chooseMaterial(chestType, doubleMaterial, leftMaterial, rightMaterial));
         }
     }
     #endif

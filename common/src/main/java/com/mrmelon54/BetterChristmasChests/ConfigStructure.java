@@ -27,6 +27,7 @@ public class ConfigStructure implements ConfigData {
     public boolean chestEnabled = true;
     public boolean trappedChestEnabled = true;
     public boolean enderChestEnabled = true;
+    public boolean copperChestEnabled = true;
 
     // Enable minecart with chest type separately
     public boolean minecartWithChestEnabled = true;
