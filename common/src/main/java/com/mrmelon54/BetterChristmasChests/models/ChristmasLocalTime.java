@@ -27,7 +27,7 @@ public class ChristmasLocalTime implements SelectItemModelProperty<Boolean> {
     private Boolean lastResult = false;
 
     @Override
-    public @Nullable Boolean get(@NonNull ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity entity, int seed, @NonNull ItemDisplayContext displayContext) {
+    public Boolean get(@NonNull ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity entity, int seed, @NonNull ItemDisplayContext displayContext) {
         long l = Util.getMillis();
         if (l > nextUpdateTimeMs) {
             lastResult = update();
