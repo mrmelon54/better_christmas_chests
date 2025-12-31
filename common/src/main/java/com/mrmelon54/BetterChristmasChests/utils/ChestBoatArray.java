@@ -13,6 +13,7 @@ public class ChestBoatArray {
             Items.CHERRY_CHEST_BOAT,
             Items.DARK_OAK_CHEST_BOAT,
             Items.MANGROVE_CHEST_BOAT,
-            Items.BAMBOO_CHEST_RAFT
+            Items.BAMBOO_CHEST_RAFT,
+            Items.PALE_OAK_CHEST_BOAT,
     };
 }
