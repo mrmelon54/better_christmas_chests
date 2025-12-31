@@ -8,7 +8,7 @@ package com.mrmelon54.BetterChristmasChests.mixin;
 public class MixinSelectItemModelProperties {}
 #else
 
-import com.mrmelon54.BetterChristmasChests.models.ChristmasEnabled;
+import com.mrmelon54.BetterChristmasChests.models.ChristmasEnabledItemModelProperty;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.item.properties.select.SelectItemModelProperties;
@@ -31,7 +31,7 @@ public class MixinSelectItemModelProperties {
 
     @Inject(method = "bootstrap", at = @At(value = "TAIL"))
     private static void add_christmas_local_time(CallbackInfo ci) {
-        ID_MAPPER.put(Identifier.fromNamespaceAndPath("better_christmas_chests", "christmas_enabled"), ChristmasEnabled.TYPE);
+        ID_MAPPER.put(Identifier.fromNamespaceAndPath("better_christmas_chests", "christmas_enabled"), ChristmasEnabledItemModelProperty.TYPE);
     }
 }
 #endif
