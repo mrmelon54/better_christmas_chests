@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 public enum ChristmasEnabled implements SelectItemModelProperty<Boolean> {
     ENABLED, DISABLED;
 
-    private static final long UPDATE_INTERVAL_MS = TimeUnit.MINUTES.toMillis(1);
+    private static final long UPDATE_INTERVAL_MS = TimeUnit.SECONDS.toMillis(1);
     public static final Codec<Boolean> VALUE_CODEC = Codec.BOOL;
     private static final MapCodec<ChristmasEnabled> DATA_MAP_CODEC = MapCodec.unit(DISABLED);
     public static final Type<ChristmasEnabled, Boolean> TYPE = Type.create(DATA_MAP_CODEC, VALUE_CODEC);
