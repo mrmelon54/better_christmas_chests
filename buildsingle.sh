@@ -13,4 +13,4 @@ sh gradlew build -PmcVer="$version" --no-daemon
 echo "==================== Merging $version ===================="
 sh gradlew mergeJars -PmcVer="$version" --no-daemon
 echo "==================== Moving jar ===================="
-mv Merged/*.jar buildAllJars/
+mv build/merged/*.jar buildAllJars/
