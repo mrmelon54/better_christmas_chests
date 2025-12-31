@@ -19,10 +19,13 @@ import org.jspecify.annotations.Nullable;
 import java.util.concurrent.TimeUnit;
 
 @Environment(EnvType.CLIENT)
-public class ChristmasLocalTime implements SelectItemModelProperty<Boolean> {
+public enum ChristmasEnabled implements SelectItemModelProperty<Boolean> {
+    ENABLED, DISABLED;
+
     private static final long UPDATE_INTERVAL_MS = TimeUnit.MINUTES.toMillis(1);
     public static final Codec<Boolean> VALUE_CODEC = Codec.BOOL;
-    public static final SelectItemModelProperty.Type<ChristmasLocalTime, Boolean> TYPE = Type.create(MapCodec.unit(null), VALUE_CODEC);
+    private static final MapCodec<ChristmasEnabled> DATA_MAP_CODEC = MapCodec.unit(DISABLED);
+    public static final Type<ChristmasEnabled, Boolean> TYPE = Type.create(DATA_MAP_CODEC, VALUE_CODEC);
     private long nextUpdateTimeMs;
     private Boolean lastResult = false;
 
