@@ -7,6 +7,8 @@
     "MixinChestedHorseRenderer",
     "MixinHorseRenderer",
     "MixinLlamaRenderer",
+    "MixinChestSpecialRenderer",
+    "MixinRaftRenderer",
     "MixinSelectItemModelProperties",
     "MixinSheets",
     "MixinUndeadHorseRenderer"
