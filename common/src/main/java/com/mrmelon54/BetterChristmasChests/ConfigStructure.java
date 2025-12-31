@@ -35,16 +35,22 @@ public class ConfigStructure implements ConfigData {
     // Enable chest boat type separately
     public boolean chestBoatEnabled = true;
 
-    public boolean isChristmasDates() {
+    private boolean isChristmasDates() {
         Calendar calendar = Calendar.getInstance();
         int date = calendar.get(Calendar.DATE);
         return calendar.get(Calendar.MONTH) == Calendar.DECEMBER && date >= 24 && date <= 26;
+    }
+
+    private boolean isDecemberDates() {
+        Calendar calendar = Calendar.getInstance();
+        return calendar.get(Calendar.MONTH) == Calendar.DECEMBER;
     }
 
     public boolean isChristmas() {
         return switch (modeEnabled) {
             case ALWAYS -> true;
             case AT_CHRISTMAS -> isChristmasDates();
+            case DECEMBER -> isDecemberDates();
             case NEVER -> false;
         };
     }
