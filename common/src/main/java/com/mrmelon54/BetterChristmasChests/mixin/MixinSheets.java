@@ -133,7 +133,7 @@ public abstract class MixinSheets {
         #endif
     }
 
-    #if MC_VER < 1_21_11
+    #if MC_VER < MC_1_21_11
     @Inject(method = "getAllMaterials", at = @At("RETURN"))
     private static void getXmasMaterials(Consumer<Material> consumer, CallbackInfo ci) {
         consumer.accept(ENDER_XMAS_LOCATION);
